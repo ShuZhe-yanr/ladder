@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>css的动画效果</title>
+		<script type="text/javascript" src="./vue.js">
+		</script>
+	</head>
+	<style type="text/css">
+		.trade-enter{
+			/* 表示的进去那一瞬间的透明度 */
+			opacity: 0;
+		}
+		.trade-enter-active{
+			transition: opacity 1s;
+		}
+		.trade-leave-to{
+			opacity:0;
+		}
+		.trade-leave-active{
+			transition: opacity 1s;
+		}
+	</style>
+	<body>
+		
+		<div id="root">
+			<trade :type="type">
+				<div>hello world</div>
+			</trade>
+			<button type="button" @click="handleClick">提交</button>
+		</div>
+		
+		<script type="text/javascript">
+
+			Vue.component('trade', {
+				props:['type'],
+				template:`
+					<transition name="trade"  @before-enter="handleBeforeEnter" @enter="handleEnter">
+						<slot v-if="type"></slot>
+					</transition>
+				`,
+				methods:{
+					handleBeforeEnter:function(el){
+						el.style.color = 'red';
+					},
+					handleEnter:function(el, done){
+						setTimeout(() => {
+							el.style.color = 'blue';
+							done();
+						}, 2000);
+					}
+				}
+			})
+			
+			var vm = new Vue({
+				el:'#root',
+				data:{
+					type:true
+				},
+				methods:{
+					handleClick:function(){
+						this.type = !this.type;
+					}
+				}
+			})
+
+		</script>
+		
+	</body>
+</html>

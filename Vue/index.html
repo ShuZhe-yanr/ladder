@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src='./vue.js'></script>
+	</head>
+	<body>
+		<div id="root">
+			<div v-on:click="handleClick">
+				{{name1}}<!-- 这里填写的是插值表达式，用来表示的message里面的值 -->
+				<div v-text="name1"></div>
+				<div v-html="name1"></div>
+			</div>
+			<item></item>
+		</div>
+		
+		<script>
+			/* 在这里定义了一个新的组件 */
+			Vue.component('item', {
+				template:'<div> hello item</div>',
+			})
+			
+			/* 通过new一个Vue这样可以接管对root的doom操作 */
+			var vm = new Vue({
+				el:'#root',//在这里表示的是让vue接管外部的标签，el里面写的是接管的标签的名字
+				data:{
+					message:'hello world',//data里面存放的是数据
+					name1:"<h1>data</h1>",
+				},
+				methods:{
+					//所有在dom中绑定的方法的定义必须是在methods下面进行
+					handleClick:function(){
+						alert("hello");
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

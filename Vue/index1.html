@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>列表的循环</title>
+		<script type="text/javascript" src="./vue.js"></script>
+	</head>
+
+	<body>
+		<div id="app">
+			<table>
+				<tbody>
+					<tr is='count' ref='t1'  @change='handleClick'></tr>
+					<tr is='count' ref='t2'  @change='handleClick'></tr>
+					<tr><td>{{total}}</td></tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<script type="text/javascript">
+					
+			Vue.component('count', {
+				template:'<tr><td @click="handlePlus">{{number}}</td></tr>',
+				data:function(){
+					return{
+						number:0
+					}
+				},
+				methods:{
+					handlePlus:function(){
+						this.number++;
+						this.$emit('change');
+					}
+				}
+			})
+			var vm = new Vue({
+				el : '#app',
+				data:{
+					total:0,
+				},
+				methods:{
+					handleClick:function(){
+						this.total = this.$refs.t1.number + this.$refs.t2.number;
+					}
+				}
+			})
+		</script>
+		
+	</body>
+</html>
